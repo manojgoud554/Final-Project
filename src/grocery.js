@@ -9,6 +9,15 @@ import veggies from './assets/veggies.jpg';
 import success from './assets/success.png';
 import Fruits from './fruits';
 import cart from './cart.svg'
+import mango from './assets/mango.svg';
+import strawberry from './assets/strawberry.svg';
+import kiwi1 from './assets/kiwi1.svg';
+import beetroot1 from './assets/beetroot1.svg';
+import mirchi from './assets/mirchi.svg';
+import rice from './assets/rice.svg';
+import salt from './assets/salt.svg';
+import tomato from './assets/tomato.svg';
+import potato from './assets/potato.svg';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 // import Navbar from 'react-bootstrap/Navbar';
 // import { Nav, NavItem, NavLink } from 'reactstrap';
@@ -22,14 +31,24 @@ class Grocery extends React.PureComponent {
         super();
 
         this.state = {
-            paymentYes:false,
-            paymentSuccess:false,
-            logout:false,
-            totalAmount:0,
-            mail:"",
-            loginerr:false,
-            loggedIn:false,
-            password:"",
+            signupData:{},
+            signupPageErr:"",
+            signupFlag: false,
+            signupErr: "",
+            signupmail: "",
+            signupusername: "",
+            signupnumber: "",
+            signuppassword: "",
+            signupConfirmPassword: "",
+            signupConfirmPasswordErr: "",
+            paymentYes: false,
+            paymentSuccess: false,
+            logout: false,
+            totalAmount: 0,
+            mail: "",
+            loginerr: false,
+            loggedIn: false,
+            password: "",
             cartFlag: false,
             loginFlag: false,
             loginErrmsg: "",
@@ -47,9 +66,9 @@ class Grocery extends React.PureComponent {
             mirchi: "",
             mirchiQuantity: 0,
             mirchiAmount: 0,
-            ricedisabled: false,
-            saltdisabled: false,
-            mirchidisabled: false,
+            ricedisabled: true,
+            saltdisabled: true,
+            mirchidisabled: true,
             otherGroceriesAmount: 0,
             Mango: "",
             MangoQuantity: 0,
@@ -61,9 +80,9 @@ class Grocery extends React.PureComponent {
             StrawberryQuantity: 0,
             StrawberryAmount: 0,
             fruitsAmount: 0,
-            mangoDisabled: false,
-            kiwiDisabled: false,
-            StrawberryDisabled: false,
+            mangoDisabled: true,
+            kiwiDisabled: true,
+            StrawberryDisabled: true,
             mangoerrMsg: "",
             kiwierrMsg: "",
             straerrMsg: "",
@@ -79,10 +98,10 @@ class Grocery extends React.PureComponent {
             beetroot: "",
             beetrootQuantity: 0,
             beetrootAmount: 0,
-            tomatoDisabled: false,
-            potatoDisabled: false,
-            beetrootDisabled: false,
-            veggiesAmount:0,
+            tomatoDisabled: true,
+            potatoDisabled: true,
+            beetrootDisabled: true,
+            veggiesAmount: 0,
             itemsShopped: []
         }
 
@@ -90,13 +109,13 @@ class Grocery extends React.PureComponent {
 
     other = () => {
         this.setState({ groceriesFlag: true });
-        if(this.state.paymentSuccess){
-            this.setState({salt:""});
-            this.setState({mirchi:""});
-            this.setState({Rice:""});
-            this.setState({saltQuantity:0});
-            this.setState({RiceQuantity:0})
-            this.setState({mirchiQuantity:0});
+        if (this.state.paymentSuccess) {
+            this.setState({ salt: "" });
+            this.setState({ mirchi: "" });
+            this.setState({ Rice: "" });
+            this.setState({ saltQuantity: 0 });
+            this.setState({ RiceQuantity: 0 })
+            this.setState({ mirchiQuantity: 0 });
         }
     }
     fruits = () => {
@@ -109,8 +128,8 @@ class Grocery extends React.PureComponent {
     cart = () => {
         this.setState({ cartFlag: true });
         this.setState({ loginErrmsg: "" })
-        if(this.state.paymentSuccess){
-            this.setState({itemsShopped:[]})
+        if (this.state.paymentSuccess) {
+            this.setState({ itemsShopped: [] })
         }
     }
 
@@ -118,66 +137,148 @@ class Grocery extends React.PureComponent {
         console.log("bahvay")
         this.setState({ loginFlag: true });
         this.setState({ cartFlag: false })
-        
+        this.setState({signupFlag:false})
     }
-    logout =() =>{
+    logout = () => {
         window.location.reload();
     }
-    loginData = (event) =>{
-        if(event.target.name === "mail"){
-            this.setState({mail:event.target.value})
+    loginData = (event) => {
+        if (event.target.name === "mail") {
+            this.setState({ mail: event.target.value })
         }
-        if(event.target.name === "password"){
-            this.setState({password:event.target.value});
-           
+        if (event.target.name === "password") {
+            this.setState({ password: event.target.value });
+
         }
     }
-    goBackHome = () =>{
+    goBackHome = () => {
         window.location.reload();
         // console.log(this.state.loggedIn)
         // if(this.state.loggedIn){
         //     this.setState({loggedIn:true})
         // }
-        
-    }
 
-    submit =()=>{
-        
-        if(this.state.password === "bhavya"){
-            this.setState({loggedIn:true});
+    }
+    signup = () => {
+        // this.setState({signupusername:""});
+        this.setState({signuppassword:""})
+        console.log("bhavya")
+        this.setState({signupPageErr:""})
+        this.setState({loginerr:""})
+        this.setState({ signupFlag: true });
+        this.setState({ loginFlag: false });
+        console.log("signup")
+    }
+    register = () =>{
+        let signUp=new Map();
+        if(this.state.signupusername.length<=0 || this.state.signupConfirmPassword.length<=0 || this.state.signupnumber.length<=0 || this.state.signupmail.length<=0 || this.state.signuppassword.length<=0){
+            this.setState({signupPageErr:"Please enter all the required information"});
+            this.setState({ signupFlag: true });
         }
         else{
-            this.setState({loggedIn:false});
+            this.setState({signupPageErr:""})
+            this.setState({ signupFlag: false });
+            this.setState({ loginFlag: false });
+            console.log("signup")
         }
-        if(this.state.password.length<=0 || this.state.mail.length<=0){
+        console.log(this.signupusername)
+       signUp.set(this.state.signupusername,this.state.signupConfirmPassword);
+       this.setState({signupData:signUp});
+    }
+    submit = () => {
+        this.setState({signupPageErr:""})
+        console.log(this.state.signupData)
+        if (this.state.mail === "vinay" || this.state.mail === "teja") {
+            if (this.state.password === "bhavya") {
+                this.setState({ loggedIn: true });
+                this.setState({ loginFlag: false });
+                this.setState({ signupErr: "" });
+                this.setState({loginerr:""})
+            }
+            else {
+                this.setState({ loggedIn: false });
+                this.setState({ loginFlag: true });
+                this.setState({ loginerr: "Username or password is in correct" });
+            }
+        }
+        else if(this.state.mail.length>0 && this.state.password>0){
+            if (this.state.mail===this.state.signupmail && this.state.password===this.state.signuppassword) {
+                console.log("bhavya")
+                this.setState({ loggedIn: true });
+                this.setState({ loginFlag: false });
+                this.setState({ signupErr: "" });
+                this.setState({ loginerr: "" });
+            }
+            else {
+                this.setState({ loggedIn: false });
+                this.setState({ loginFlag: true });
+                this.setState({ loginerr: "Please enter registered username" });
+            }
+        }
+        
+        else {
             this.setState({loginerr:"Please give your credentials"});
             this.setState({loginFlag:true})
             this.setState({loggedIn:false})
         }
-        else{
-            this.setState({loginerr:""});
-            this.setState({loginFlag:false})
-            this.setState({loggedIn:true})
-        this.setState({ cartFlag: false })
-        
-        }
-        
+        // if(this.state.password.length<=0 || this.state.mail.length<=0){
+        //     this.setState({loginerr:"Please give your credentials"});
+        //     this.setState({loginFlag:true})
+        //     this.setState({loggedIn:false})
+        // }
+        // else{
+        //     this.setState({loginerr:""});
+        //     this.setState({loginFlag:false})
+        //     this.setState({loggedIn:true})
+        // this.setState({ cartFlag: false })
+
+        // }
+
     }
-    continue= ()=>{
+
+    signupData = (event) => {
+        // console.log(event.target.value);
+        if (event.target.name === "username") {
+            this.setState({ signupusername: event.target.value })
+        }
+        if (event.target.name === "email") {
+            this.setState({ signupmail: event.target.value })
+        }
+        if (event.target.name === "password") {
+            this.setState({ signuppassword: event.target.value });
+        }
+        if (event.target.name === "tel") {
+            this.setState({ signupnumber: event.target.value });
+        }
+    }
+
+    confirmPassword = (event) => {
+        console.log(event.target.value)
+        if (this.state.signuppassword === event.target.value) {
+            this.setState({ signupConfirmPassword: event.target.value });
+            this.setState({ signupConfirmPasswordErr: "" });
+        }
+        else {
+            this.setState({ signupConfirmPassword: "" });
+            this.setState({ signupConfirmPasswordErr: "Password doesnot match" })
+        }
+    }
+
+    continue = () => {
         this.setState({ paymentFlag: true });
-            this.setState({ cartFlag: false })
-            let totalAmount=this.state.MangoAmount+this.state.KiwiAmount+this.state.StrawberryAmount+this.state.saltAmount+this.state.RiceAmount+this.state.mirchiAmount+this.state.potatoAmount+this.state.tomatoAmount+this.state.beetrootAmount;
-            this.setState({totalAmount:totalAmount});
-            this.setState({ loginErrmsg: "" });
-            this.setState({paymentSuccess:true})
+        this.setState({ cartFlag: false })
+        let totalAmount = this.state.MangoAmount + this.state.KiwiAmount + this.state.StrawberryAmount + this.state.saltAmount + this.state.RiceAmount + this.state.mirchiAmount + this.state.potatoAmount + this.state.tomatoAmount + this.state.beetrootAmount;
+        this.setState({ totalAmount: totalAmount });
+        this.setState({ loginErrmsg: "" });
+        this.setState({ paymentSuccess: true })
     }
     payment = () => {
-        
+
         console.log(this.state.loggedIn);
         if (this.state.loggedIn) {
-            let totalAmount=this.state.MangoAmount+this.state.KiwiAmount+this.state.StrawberryAmount+this.state.saltAmount+this.state.RiceAmount+this.state.mirchiAmount+this.state.potatoAmount+this.state.tomatoAmount+this.state.beetrootAmount;
-            this.setState({totalAmount:totalAmount});
-            this.setState({paymentYes:true,loginErrmsg:""});
+            let totalAmount = this.state.MangoAmount + this.state.KiwiAmount + this.state.StrawberryAmount + this.state.saltAmount + this.state.RiceAmount + this.state.mirchiAmount + this.state.potatoAmount + this.state.tomatoAmount + this.state.beetrootAmount;
+            this.setState({ totalAmount: totalAmount });
+            this.setState({ paymentYes: true, loginErrmsg: "" });
         }
         else {
             this.setState({ loginErrmsg: "To continue Payment, Please Login!!" })
@@ -191,8 +292,8 @@ class Grocery extends React.PureComponent {
         console.log(this.state.fruitsErrorMessage);
         let count = 1;
         let shoppedItems = [];
-        if(this.state.paymentSuccess){
-            this.setState({itemsShopped:[]});
+        if (this.state.paymentSuccess) {
+            this.setState({ itemsShopped: [] });
         }
         // if (this.state.fruitsErrorMessage.length === 0) {
         //     this.setState({ groceriesFlag: false, fruitsFlag: false, veggiesFlag: false });
@@ -320,14 +421,14 @@ class Grocery extends React.PureComponent {
             this.setState({ acceptPay: false });
         }
         if (errMessage.length <= 0) {
-            let totalAmount=this.state.MangoAmount+this.state.KiwiAmount+this.state.StrawberryAmount+this.state.saltAmount+this.state.RiceAmount+this.state.mirchiAmount+this.state.potatoAmount+this.state.tomatoAmount+this.state.beetrootAmount;
+            let totalAmount = this.state.MangoAmount + this.state.KiwiAmount + this.state.StrawberryAmount + this.state.saltAmount + this.state.RiceAmount + this.state.mirchiAmount + this.state.potatoAmount + this.state.tomatoAmount + this.state.beetrootAmount;
             this.setState({ fruitsErrorMessage: "", groceriesErrorMessage: "", veggieErrorMessage: "" });
-            this.setState({ groceriesFlag: false, fruitsFlag: false, veggiesFlag: false, loginFlag:false, paymentYes:false,  cartFlag: false,paymentFlag:false });
+            this.setState({ groceriesFlag: false, fruitsFlag: false, veggiesFlag: false, loginFlag: false, paymentYes: false, cartFlag: false, paymentFlag: false,signupFlag:false });
             console.log(this.state.saltAmount + this.state.mirchiAmount + this.state.RiceAmount)
             this.setState({ fruitsAmount: this.state.MangoAmount + this.state.KiwiAmount + this.state.StrawberryAmount })
             this.setState({ otherGroceriesAmount: this.state.saltAmount + this.state.mirchiAmount + this.state.RiceAmount });
-            this.setState({veggiesAmount:this.state.potatoAmount+this.state.tomatoAmount+this.state.beetrootAmount});
-            this.setState({totalAmount:totalAmount});
+            this.setState({ veggiesAmount: this.state.potatoAmount + this.state.tomatoAmount + this.state.beetrootAmount });
+            this.setState({ totalAmount: totalAmount });
         }
 
     }
@@ -584,40 +685,44 @@ class Grocery extends React.PureComponent {
                             <Table striped bordered hover>
                                 <thead>
                                     <tr>
-                                        <th>#</th>
+                                        <th>Picture</th>
                                         <th>Item Name</th>
                                         <th>Amount Per KG in $</th>
                                         <th>Select</th>
                                         <th>Required Quantity</th>
+                                        <th>Price in $</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>1</td>
+                                    <td><img src={rice}/></td>
                                         <td>Rice</td>
                                         <td>5</td>
                                         <td> <select name="RiceNeed" value={this.state.Rice} onChange={this.handleInputChange}>
-                                            <option selected defaultValue>select</option>
+
+
+                                            <option selected value="notRequired">Not Required</option>
                                             <option value="required">Required</option>
-                                            <option value="notRequired">Not Required</option>
 
                                         </select></td>
                                         <td><input
                                             name="RiceQuantity"
                                             type="Number"
+                                            step="0.1"
                                             onChange={this.handleInputChange}
                                             disabled={this.state.ricedisabled}
                                             value={this.state.RiceQuantity}
                                         /></td>
+                                        <td>{this.state.RiceAmount}</td>
                                     </tr>
                                     <tr>
-                                        <td>2</td>
+                                    <td><img src={salt}/></td>
                                         <td>Salt</td>
                                         <td>10</td>
                                         <td> <select name="saltNeed" value={this.state.salt} onChange={this.handleInputChange}>
-                                            <option selected defaultValue>select</option>
+                                            <option selected value="notRequired">Not Required</option>
                                             <option value="required">Required</option>
-                                            <option value="notRequired">Not Required</option>
+
 
                                         </select></td>
                                         <td><input
@@ -626,25 +731,29 @@ class Grocery extends React.PureComponent {
                                             onChange={this.handleInputChange}
                                             disabled={this.state.saltdisabled}
                                             value={this.state.saltQuantity}
+                                            step="0.1"
                                         /></td>
+                                        <td>{this.state.saltAmount}</td>
                                     </tr>
                                     <tr>
-                                        <td>3</td>
+                                    <td><img src={mirchi}/></td>
                                         <td>Mirchi Powder</td>
                                         <td>6</td>
                                         <td> <select name="MirchiNeed" value={this.state.mirchi} onChange={this.handleInputChange}>
-                                            <option selected defaultValue>select</option>
-                                            <option value="required">Required</option>
-                                            <option value="notRequired">Not Required</option>
 
+
+                                            <option selected value="notRequired">Not Required</option>
+                                            <option value="required">Required</option>
                                         </select></td>
                                         <td><input
                                             name="MirchiQuantity"
                                             type="Number"
+                                            step="0.1"
                                             onChange={this.handleInputChange}
                                             disabled={this.state.mirchidisabled}
                                             value={this.state.mirchiQuantity}
                                         /></td>
+                                        <td>{this.state.mirchiAmount}</td>
                                     </tr>
 
                                 </tbody>
@@ -658,67 +767,73 @@ class Grocery extends React.PureComponent {
                             <Table striped bordered hover>
                                 <thead>
                                     <tr>
-                                        <th>#</th>
+                                        <th>Picture</th>
                                         <th>Item Name</th>
                                         <th>Amount Per KG in $</th>
                                         <th>Select</th>
                                         <th>Required Quantity</th>
+                                        <th>Price in $</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>1</td>
+                                    <td><img src={mango} className="image"/></td>
                                         <td>Mango</td>
                                         <td>10</td>
                                         <td> <select name="MangoNeed" value={this.state.Mango} onChange={this.handleInputChange1}>
-                                            <option selected  >select</option>
-                                            <option value="required">Required</option>
-                                            <option value="notRequired">Not Required</option>
 
+                                            <option selected value="notRequired">Not Required</option>
+                                            <option value="required">Required</option>
                                         </select></td>
                                         <td><input
                                             name="MangoQuantity"
                                             type="Number"
+                                            step="0.1"
                                             onChange={this.handleInputChange1}
                                             disabled={this.state.mangoDisabled}
                                             value={this.state.MangoQuantity}
                                         /></td>
+                                        <td>{this.state.MangoAmount}</td>
                                     </tr>
                                     <tr>
-                                        <td>2</td>
+                                    <td><img src={kiwi1} className="image"/></td>
                                         <td>Kiwi</td>
                                         <td>10</td>
                                         <td> <select name="kiwiNeed" value={this.state.kiwi} onChange={this.handleInputChange1}>
-                                            <option selected >select</option>
+                                            <option selected value="notRequired">Not Required</option>
                                             <option value="required">Required</option>
-                                            <option value="notRequired">Not Required</option>
+
 
                                         </select></td>
                                         <td><input
                                             name="KiwiQuantity"
                                             type="Number"
+                                            step="0.1"
                                             onChange={this.handleInputChange1}
                                             disabled={this.state.kiwiDisabled}
                                             value={this.state.kiwiQuantity}
                                         /></td>
+                                        <td>{this.state.KiwiAmount}</td>
                                     </tr>
                                     <tr>
-                                        <td>3</td>
+                                    <td><img src={strawberry} className="image"/></td>
                                         <td>Strawberry</td>
                                         <td>6</td>
                                         <td> <select name="strawberryNeed" value={this.state.Strawberry} onChange={this.handleInputChange1}>
-                                            <option selected defaultValue>select</option>
+
+                                            <option selected value="notRequired">Not Required</option>
                                             <option value="required">Required</option>
-                                            <option value="notRequired">Not Required</option>
 
                                         </select></td>
                                         <td><input
                                             name="strawberryQuantity"
                                             type="Number"
+                                            step="0.1"
                                             onChange={this.handleInputChange1}
                                             disabled={this.state.StrawberryDisabled}
                                             value={this.state.StrawberryQuantity}
                                         /></td>
+                                        <td>{this.state.StrawberryAmount}</td>
                                     </tr>
 
                                 </tbody>
@@ -732,64 +847,71 @@ class Grocery extends React.PureComponent {
                             <Table striped bordered hover>
                                 <thead>
                                     <tr>
-                                        <th>#</th>
+                                        <th>Picture</th>
                                         <th>Item Name</th>
                                         <th>Amount Per KG in $</th>
                                         <th>Select</th>
                                         <th>Required Quantity</th>
+                                        <th>Price in $</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>1</td>
+                                    <td><img src={tomato}/></td>
                                         <td>Tomato</td>
                                         <td>5</td>
                                         <td> <select name="tomatoNeed" value={this.state.tomato} onChange={this.handleInputChange2}>
-                                            <option selected >select</option>
-                                            <option value="required">Required</option>
-                                            <option value="notRequired">Not Required</option>
 
+                                            <option selected value="notRequired">Not Required</option>
+                                            <option value="required">Required</option>
                                         </select></td>
                                         <td><input
                                             name="tomatoQuantity"
                                             type="Number"
+                                            step="0.1"
                                             onChange={this.handleInputChange2}
                                             disabled={this.state.tomatoDisabled}
                                         /></td>
+                                        <td>{this.state.tomatoAmount}</td>
                                     </tr>
                                     <tr>
-                                        <td>2</td>
+                                    <td><img src={potato}/></td>
                                         <td>Potato</td>
                                         <td>10</td>
                                         <td> <select name="potatoNeed" value={this.state.potato} onChange={this.handleInputChange2}>
-                                            <option selected >select</option>
-                                            <option value="required">Required</option>
-                                            <option value="notRequired">Not Required</option>
 
+
+                                            <option selected value="notRequired">Not Required</option>
+                                            <option value="required">Required</option>
                                         </select></td>
                                         <td><input
                                             name="potatoQuantity"
                                             type="Number"
+                                            step="0.1"
                                             onChange={this.handleInputChange2}
                                             disabled={this.state.potatoDisabled}
                                         /></td>
+                                        <td>{this.state.potatoAmount}</td>
                                     </tr>
                                     <tr>
-                                        <td>3</td>
+                                    <td><img src={beetroot1}/></td>
                                         <td>Beet Root</td>
                                         <td>6</td>
                                         <td> <select name="beetrootNeed" value={this.state.beetroot} onChange={this.handleInputChange2}>
-                                            <option selected >select</option>
+
+
+                                            <option selected value="notRequired">Not Required</option>
                                             <option value="required">Required</option>
-                                            <option value="notRequired">Not Required</option>
 
                                         </select></td>
                                         <td><input
                                             name="beetrootQuantity"
                                             type="Number"
+                                            step="0.1"
                                             onChange={this.handleInputChange2}
                                             disabled={this.state.beetrootDisabled}
                                         /></td>
+                                        <td>{this.state.beetrootAmount}</td>
                                     </tr>
 
                                 </tbody>
@@ -802,16 +924,16 @@ class Grocery extends React.PureComponent {
                             this.state.cartFlag ? <>
                                 <div className="row nav">
                                     <div className="col-md-3 offset-4">
-                                        <h2 style={{color:'aliceblue'}}>My Groceries</h2>
+                                        <h2 style={{ color: 'aliceblue' }}>My Groceries</h2>
                                     </div>
                                     <div className="col-md-3  ">
-                                    {this.state.loggedIn?
-                                     <>
-                                     <b style={{fontWeight:'500px',color:'aliceblue'}}>Hey, {this.state.mail}</b>&nbsp;&nbsp;
+                                        {this.state.loggedIn ?
+                                            <>
+                                                <b style={{ fontWeight: '500px', color: 'aliceblue' }}>Hey, {this.state.mail}</b>&nbsp;&nbsp;
                                      <Button className="logout" onClick={this.logout}>Logout</Button>
-                                     </>
-                                    :<Button className="login"  onClick={this.login}>Login</Button>
-                                    }    
+                                            </>
+                                            : <Button className="login" onClick={this.login}>Login</Button>
+                                        }
                                     </div>
                                     <div className="col-md-2 ">
 
@@ -835,31 +957,31 @@ class Grocery extends React.PureComponent {
                                         </Table>
                                         <Button variant="primary" onClick={this.backHome}>Back to Home</Button>&nbsp;&nbsp;
                                     <Button variant="primary" disabled={this.state.acceptPay} onClick={this.payment}>Payment</Button>
-                                   
+
                                         {this.state.loginErrmsg.length > 0 ? <div style={{ color: 'red' }}>{this.state.loginErrmsg}</div> : null}
                                     </div>
                                 </div>
-                                {this.state.paymentYes?
-                                <div className="row">
-                                    <div className="col-md-6 offset-3">
-                                   
-                                   <h5 style={{color:'green',marginTop:'20px'}}>The total amount to be paid is {this.state.totalAmount}.If you want to Continue Payment, please click on "Continue payment", else continue Shopping</h5>
-                                   <Button variant="primary" disabled={this.state.acceptPay} onClick={this.continue}>Continue Payment</Button>
-                                    </div>
-                                </div>:null} 
+                                {this.state.paymentYes ?
+                                    <div className="row">
+                                        <div className="col-md-6 offset-3">
+
+                                            <h5 style={{ color: 'green', marginTop: '20px' }}>The total amount to be paid is {this.state.totalAmount}.If you want to Continue Payment, please click on "Continue payment", else continue Shopping</h5>
+                                            <Button variant="primary" disabled={this.state.acceptPay} onClick={this.continue}>Continue Payment</Button>
+                                        </div>
+                                    </div> : null}
                             </>
                                 : this.state.loginFlag ? <>
                                     <div className="row nav">
                                         <div className="col-md-3 offset-4">
-                                            <h2 style={{color:'aliceblue'}}>My Groceries</h2>
+                                            <h2 style={{ color: 'aliceblue' }}>My Groceries</h2>
                                         </div>
                                         <div className="col-md-3">
-                                        {this.state.loggedIn?
-                                         <>
-                                         <b style={{fontWeight:'500px',color:'aliceblue'}}>Hey, {this.state.mail}</b> &nbsp;&nbsp;
+                                            {this.state.loggedIn ?
+                                                <>
+                                                    <b style={{ fontWeight: '500px', color: 'aliceblue' }}>Hey, {this.state.mail}</b> &nbsp;&nbsp;
                                          <Button className="logout" onClick={this.logout}>Logout</Button>
-                                         </>
-                                        :<Button className="login" onClick={this.login}>Login</Button>}    
+                                                </>
+                                                : <Button className="login" onClick={this.login}>Login</Button>}
                                         </div>
                                         <div className="col-md-2">
 
@@ -869,113 +991,186 @@ class Grocery extends React.PureComponent {
                                     <div className="row">
                                         <div className="col-md-4 offset-4">
                                             <form>
-                                                <div class="form-group">
-                                                    <label for="exampleInputEmail1">Email address</label>
-                                                    <input type="text" name="mail" onChange={this.loginData} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
-                                                    
+                                                <div className="form-group">
+                                                    <label for="exampleInputEmail1">UserName</label>
+                                                    <input type="text" name="mail" onChange={this.loginData} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
+
                                                 </div>
-                                                <div class="form-group">
+                                                <div className="form-group">
                                                     <label for="exampleInputPassword1">Password</label>
-                                                    <input type="password" name="password" onChange={this.loginData} class="form-control" id="exampleInputPassword1" placeholder="Password" />
+                                                    <input type="password" name="password" onChange={this.loginData} className="form-control" id="exampleInputPassword1" placeholder="Password" />
                                                 </div>
-                                                {/* <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-                                                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                                                {/* <div className="form-check">
+                                                    <input type="checkbox" className="form-check-input" id="exampleCheck1" />
+                                                    <label className="form-check-label" for="exampleCheck1">Check me out</label>
                                                 </div> */}
                                                 <Button onClick={this.submit}>Login</Button>&nbsp;&nbsp;
-                                                <Button variant="primary" onClick={this.backHome}>Back to Home</Button>
+                                                <Button variant="primary" onClick={this.backHome}>Back to Home</Button>&nbsp;&nbsp;
+                                                <Button variant="primary" onClick={this.signup}>Sign UP</Button>
+                                                {/* <div className="row">
+                                                    <div className="col-md-4 offset-4">
+                                                    
+                                                    </div>
+                                                </div> */}
                                                 {/* <button  onClick={this.submit} className="btn btn-primary">Login</button> */}
-                                                {this.state.loginerr.length>0?<div style={{ color: 'red' }}>{this.state.loginerr}</div> : null}
+                                                {this.state.loginerr.length > 0 ? <div style={{ color: 'red' }}>{this.state.loginerr}</div> : null}
+                                            </form>
+                                        </div>
+                                    </div>
+                                </> : this.state.signupFlag ? <><div className="row nav">
+                                    <div className="col-md-3 offset-4">
+                                        <h2 style={{ color: 'aliceblue' }}>My Groceries</h2>
+                                    </div>
+                                    <div className="col-md-3  ">
+                                        {this.state.loggedIn ?
+                                            <>
+                                                <b style={{ fontWeight: '500px', color: 'aliceblue' }}>Hey, {this.state.mail}</b>&nbsp;&nbsp;
+                                             <Button className="logout" onClick={this.logout}>Logout</Button>
+                                            </>
+                                            : <Button className="login" onClick={this.login}>Login</Button>}
+                                    </div>
+                                    <div className="col-md-2">
+
+                                        <Button className="cart" onClick={this.cart}><AddShoppingCartIcon></AddShoppingCartIcon> View Cart</Button>
+                                    </div>
+                                </div>
+                                    <div className="row">
+                                        <div className="col-md-4 offset-4">
+                                            <form>
+                                                <div className="form-group">
+                                                    <label >Username</label>
+                                                    <input value={this.state.signupusername} type="text" name="username" onChange={this.signupData} className="form-control"  required  placeholder="Enter UserName" />
+
+                                                </div>
+                                                <div className="form-group">
+                                                    <label >Phone Number</label>
+                                                    <input value={this.state.signupnumber} type="tel" name="tel" onChange={this.signupData} className="form-control"  required placeholder="Enter your mobile number" />
+                                                </div>
+                                                <div className="form-group">
+                                                    <label>Email address</label>
+                                                    <input value={this.state.signupmail} type="email" name="email" onChange={this.signupData} className="form-control"  required placeholder="Enter your mail id" />
+                                                </div>
+                                                <div className="form-group">
+                                                    <label >Enter New Password</label>
+                                                    <input value={this.state.signuppassword}type="password" name="password" onChange={this.signupData} className="form-control"  required placeholder="Enter new password" />
+                                                </div>
+                                                <div className="form-group">
+                                                    <label >Confirm Password</label>
+                                                    <input  type="password" name="password2" onChange={this.confirmPassword} className="form-control"  required placeholder="Confirm Password" />
+                                                </div>
+                                                <span style={{ color: "red" }}>{this.state.signupConfirmPasswordErr.length > 0 ? this.state.signupConfirmPasswordErr : null}</span>
+                                                {/* <div className="form-group">
+                                                    <label for="exampleInputPassword1">Confirm Password</label>
+                                                    <input type="password" name="password" onChange={this.loginData} className="form-control" id="exampleInputPassword1" placeholder="Password" />
+                                                </div> */}
+                                                {/* <div className="form-check">
+                                                    <input type="checkbox" className="form-check-input" id="exampleCheck1" />
+                                                    <label className="form-check-label" for="exampleCheck1">Check me out</label>
+                                                </div> */}
+                                                <div>
+
+                                                    <Button variant="primary" onClick={this.register}>Sign UP</Button>&nbsp;&nbsp;
+                                                    <Button variant="primary" onClick={this.backHome}>Back to Home</Button>
+                                                    {this.state.signupPageErr.length > 0 ? <div style={{ color: 'red' }}>{this.state.signupPageErr}</div> : null}
+                                                </div>
+
+                                                {/* <div className="row">
+                                                    <div className="col-md-4 offset-4">
+                                                    
+                                                    </div>
+                                                </div> */}
+                                                {/* <button  onClick={this.submit} className="btn btn-primary">Login</button> */}
+                                                {this.state.loginerr.length > 0 ? <div style={{ color: 'red' }}>{this.state.loginerr}</div> : null}
                                             </form>
                                         </div>
                                     </div>
                                 </>
-                                    : this.state.paymentFlag ? <>
-                                        <div className="row nav">
-                                            <div className="col-md-3 offset-4">
-                                                <h2 style={{color:'aliceblue'}}>My Groceries</h2>
-                                            </div>
-                                            <div className="col-md-3  ">
-                                            {this.state.loggedIn?
-                                             <>
-                                             <b style={{fontWeight:'500px',color:'aliceblue'}}>Hey, {this.state.mail}</b>&nbsp;&nbsp;
-                                             <Button className="logout" onClick={this.logout}>Logout</Button>
-                                             </>
-                                            :<Button className="login" onClick={this.login}>Login</Button>}    
-                                            </div>
-                                            <div className="col-md-2">
-
-                                                <Button className="cart" onClick={this.cart}><AddShoppingCartIcon></AddShoppingCartIcon> View Cart</Button>
-                                            </div>
-                                        </div>
-                                        <div className="row">
-                                                <div className="col-md-4 offset-4">
-                                                {/* <div style={{color:'green',paddingTop:'100px'}}>The total amount  payed is {this.state.totalAmount}</div>
-                                            <div  style={{color:'green'}}>please visit our website Again, Thank you!!!</div> */}
-                                            <img style={{marginLeft:'-220px'}} src={success}/>
-                                            <Button style={{marginLeft:'-90px'}} variant="primary" type="submit" onClick={this.goBackHome}>Back to Home</Button>
-                                                </div>
-                                        </div>
-                                            
-                                    </> :
-                                        <>
+                                        : this.state.paymentFlag ? <>
                                             <div className="row nav">
                                                 <div className="col-md-3 offset-4">
-                                                    <h2 style={{color:'aliceblue'}}>My Groceries</h2>
+                                                    <h2 style={{ color: 'aliceblue' }}>My Groceries</h2>
                                                 </div>
-                                                <div className="col-md-3">
-                                                {this.state.loggedIn?
-                                                <>
-                                                <b style={{fontWeight:'500px' ,color:'aliceblue'}}>Hey, {this.state.mail}</b>&nbsp;&nbsp;
-                                                <Button className="logout" onClick={this.logout}>Logout</Button>
-                                                </>
-                                                :<Button className="login" onClick={this.login}>Login</Button>}    
+                                                <div className="col-md-3  ">
+                                                    {this.state.loggedIn ?
+                                                        <>
+                                                            <b style={{ fontWeight: '500px', color: 'aliceblue' }}>Hey, {this.state.mail}</b>&nbsp;&nbsp;
+                                             <Button className="logout" onClick={this.logout}>Logout</Button>
+                                                        </>
+                                                        : <Button className="login" onClick={this.login}>Login</Button>}
                                                 </div>
-                                                <div className="col-md-2 ">
+                                                <div className="col-md-2">
 
                                                     <Button className="cart" onClick={this.cart}><AddShoppingCartIcon></AddShoppingCartIcon> View Cart</Button>
                                                 </div>
                                             </div>
-
-                                            <div className="row" style={{ paddingTop: "40px" }}>
-                                                <div className="col-md-3 offset-1">
-                                                    <Card style={{ width: '18rem', height: '24rem' }}>
-                                                        <Card.Img variant="top" src={fruits} />
-                                                        <Card.Body>
-                                                            <Card.Title>Fruits</Card.Title>
-                                                            <Card.Text>
-                                                                Seasonal and non-seasonal fruits
-                         </Card.Text>
-                                                            <Button  style={{marginTop:'10px'}} variant="primary" onClick={this.fruits}>Select Fruits</Button>
-                                                        </Card.Body>
-                                                    </Card>
-                                                </div>
-                                                <div className="col-md-3 offset-1">
-                                                    <Card style={{ width: '18rem', height: '24rem' }}>
-                                                        <Card.Img variant="top" src={veggies} />
-                                                        <Card.Body>
-                                                            <Card.Title>Vegetables</Card.Title>
-                                                            <Card.Text>
-                                                                Seasonal and non-seasonal vegetables
-                         </Card.Text>
-                                                            <Button variant="primary" onClick={this.veggies}>Select Vegetables</Button>
-                                                        </Card.Body>
-                                                    </Card>
-                                                </div>
-                                                <div className="col-md-3 offset-1">
-                                                    <Card style={{ width: '18rem', height: '24rem' }}>
-                                                        <Card.Img variant="top" src={groceries} />
-                                                        <Card.Body>
-                                                            <Card.Title>Other Groceries</Card.Title>
-                                                            <Card.Text>
-                                                                Daily usage Groceries
-                         </Card.Text>
-                                                            <Button variant="primary" onClick={this.other}>Select Groceries</Button>
-                                                        </Card.Body>
-                                                    </Card>
+                                            <div className="row">
+                                                <div className="col-md-4 offset-4">
+                                                    {/* <div style={{color:'green',paddingTop:'100px'}}>The total amount  payed is {this.state.totalAmount}</div>
+                                            <div  style={{color:'green'}}>please visit our website Again, Thank you!!!</div> */}
+                                                    <img style={{ marginLeft: '-220px' }} src={success} />
+                                                    <Button style={{ marginLeft: '-90px' }} variant="primary" type="submit" onClick={this.goBackHome}>Back to Home</Button>
                                                 </div>
                                             </div>
-                                        </>
+
+                                        </> :
+                                            <>
+                                                <div className="row nav">
+                                                    <div className="col-md-3 offset-4">
+                                                        <h2 style={{ color: 'aliceblue' }}>My Groceries</h2>
+                                                    </div>
+                                                    <div className="col-md-3">
+                                                        {this.state.loggedIn ?
+                                                            <>
+                                                                <b style={{ fontWeight: '500px', color: 'aliceblue' }}>Hey, {this.state.mail}</b>&nbsp;&nbsp;
+                                                <Button className="logout" onClick={this.logout}>Logout</Button>
+                                                            </>
+                                                            : <Button className="login" onClick={this.login}>Login</Button>}
+                                                    </div>
+                                                    <div className="col-md-2 ">
+
+                                                        <Button className="cart" onClick={this.cart}><AddShoppingCartIcon></AddShoppingCartIcon> View Cart</Button>
+                                                    </div>
+                                                </div>
+
+                                                <div className="row" style={{ paddingTop: "40px" }}>
+                                                    <div className="col-md-3 offset-1">
+                                                        <Card style={{ width: '18rem', height: '24rem' }}>
+                                                            <Card.Img variant="top" src={fruits} />
+                                                            <Card.Body>
+                                                                <Card.Title>Fruits</Card.Title>
+                                                                <Card.Text>
+                                                                    Seasonal and non-seasonal fruits
+                         </Card.Text>
+                                                                <Button style={{ marginTop: '10px' }} variant="primary" onClick={this.fruits}>Select Fruits</Button>
+                                                            </Card.Body>
+                                                        </Card>
+                                                    </div>
+                                                    <div className="col-md-3 offset-1">
+                                                        <Card style={{ width: '18rem', height: '24rem' }}>
+                                                            <Card.Img variant="top" src={veggies} />
+                                                            <Card.Body>
+                                                                <Card.Title>Vegetables</Card.Title>
+                                                                <Card.Text>
+                                                                    Seasonal and non-seasonal vegetables
+                         </Card.Text>
+                                                                <Button variant="primary" onClick={this.veggies}>Select Vegetables</Button>
+                                                            </Card.Body>
+                                                        </Card>
+                                                    </div>
+                                                    <div className="col-md-3 offset-1">
+                                                        <Card style={{ width: '18rem', height: '24rem' }}>
+                                                            <Card.Img variant="top" src={groceries} />
+                                                            <Card.Body>
+                                                                <Card.Title>Other Groceries</Card.Title>
+                                                                <Card.Text>
+                                                                    Daily usage Groceries
+                         </Card.Text>
+                                                                <Button variant="primary" onClick={this.other}>Select Groceries</Button>
+                                                            </Card.Body>
+                                                        </Card>
+                                                    </div>
+                                                </div>
+                                            </>
                 }
 
 
